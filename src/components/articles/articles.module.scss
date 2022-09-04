@@ -1,0 +1,19 @@
+@import '../../style/var.scss';
+
+.articles {
+  max-width: 940px;
+  margin: 20px auto;
+  padding: 30px 0px;
+}
+
+.article {
+  margin: 20px auto;
+  background-color: $background-color-base;
+  padding: 15px 14px 24px 20px;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}

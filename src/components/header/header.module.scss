@@ -1,0 +1,54 @@
+@import '../../style/var.scss';
+
+.header {
+  display: flex;
+  align-items: baseline;
+  background-color: $background-color-base;
+  padding: 20px;
+}
+
+.profile {
+  margin-left: 26px;
+  margin-right: 26px;
+}
+
+.user-photo {
+  width: 46px;
+  height: 46px;
+  margin-left: 12px;
+}
+
+.header > * {
+  cursor: pointer;
+}
+
+.logo {
+  margin-right: auto;
+}
+
+.profile,
+.log-out,
+.logo,
+.sign-in {
+  background: transparent;
+  border: none;
+  color: $heading-color;
+  @extend %h6;
+}
+
+.log-out {
+	border: 1px solid $text-color;
+	border-radius: 5px;
+	align-items: center;
+	padding: 6px 18px;
+}
+
+.green {
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid $success-color;
+  border-radius: 5px;
+  color: $success-color;
+  margin-left: 20px;
+  padding: 6px 18px 10px 18px;
+}

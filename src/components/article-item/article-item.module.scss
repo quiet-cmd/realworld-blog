@@ -1,0 +1,101 @@
+@import '../../style/var.scss';
+
+.article {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  margin: 26px 0px;
+}
+
+.article-info {
+  width: 75%;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: $info-color;
+  @extend %h5;
+  margin: 0px;
+}
+
+.like {
+  display: flex;
+  align-items: center;
+}
+
+.check {
+  display: inline-block;
+  appearance: none;
+}
+
+.box {
+  display: inline;
+  width: 20px;
+  height: 16px;
+  background: url('./img/like-false.svg') no-repeat;
+  margin-right: 5px;
+  margin-left: -12px;
+}
+
+.like-check {
+  @extend %h5;
+}
+
+.check:checked + .box {
+  background: url('./img/like-true.svg') no-repeat;
+}
+
+.tag-wrapper {
+  margin: 6px 0px;
+}
+
+.text {
+  color: $text-color;
+  @extend %font-size-sm;
+}
+
+.user-left {
+  display: inline;
+  margin-right: 5px;
+}
+
+.name {
+  color: $heading-color;
+  @extend %h6;
+}
+
+.date {
+  color: $text-color-secondary;
+  @extend %font-size-sm;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user-img {
+  width: 46px;
+  height: 46px;
+}
+
+.delete,
+.edit {
+  margin-right: 18px;
+  width: 90px;
+}
+
+.delete {
+  color: $highlight-color;
+  border-color: $highlight-color;
+}
+
+.edit {
+  position: absolute;
+  color: $success-color;
+  border-color: $success-color;
+}
