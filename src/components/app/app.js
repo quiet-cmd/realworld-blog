@@ -22,8 +22,9 @@ const App = ({ checkAuthorization }) => {
       <>
         <Header />
         <Route path={['/', '/articles']} component={Articles} exact />
-        <Route path="/articles/:slug" component={FullArticle} />
+        <Route path="/articles/:slug" component={FullArticle} exact />
         <Route path="/new-article" component={NewArticle} exact />
+        <Route path="/articles/:slug/edit" component={NewArticle} />
         <Route path="/sign-in" component={LogIn} exact />
         <Route path="/sign-up" component={LogUp} exact />
         <Route path="/profile" component={Profile} exact />

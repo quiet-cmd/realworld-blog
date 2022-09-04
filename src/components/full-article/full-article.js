@@ -16,7 +16,7 @@ const FullArticle = ({ match, getArticle, article = {} }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.article}>
-        {props && <ArticleItem {...props} />}
+        {props && <ArticleItem {...props} slug={match.params.slug} />}
         <ReactMarkdown>{body}</ReactMarkdown>
       </div>
     </div>

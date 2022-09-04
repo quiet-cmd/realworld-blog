@@ -4,24 +4,41 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Tag from '../tag';
-import { TextInput, TextAreaInput } from '../form/form';
 import * as action from '../../redux/article/article-action';
 
 import classes from './new-article.module.scss';
 
-const NewArticle = ({ createArticle, tagList = [] }) => {
-  const [tags, setTags] = useState(tagList);
+const NewArticle = ({ match, getArticle, editArticle, newArticle, createArticle, ...props }) => {
+  const [tags, setTags] = useState(props.tagList || []);
   const [error, setError] = useState(false);
-
+  const [body, setBody] = useState(props.body || '');
+  const [title, setTitle] = useState(props.title || '');
+  const [description, setDescription] = useState(props.description || '');
+  const slug = match?.params?.slug;
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const textfield = {
+    required: true,
+    pattern: {
+      value: /^\S+$/,
+      message: 'Field must not be empty',
+    },
+  };
 
   useEffect(() => {
+    newArticle();
+    if (slug) getArticle(slug);
     setTags((e) =>
       e.reduce((acc, e) => {
         index += 1;
         return [...acc, { text: e, id: index }];
       }, [])
     );
+    return () => newArticle();
   }, []);
 
   const addTag = (text) => {
@@ -35,7 +52,11 @@ const NewArticle = ({ createArticle, tagList = [] }) => {
 
   const submit = async (data) => {
     const newData = { ...data, tagList: tags.reduce((acc, { text }) => [...acc, text], []) };
-    const res = await createArticle(newData);
+    let res;
+
+    if (slug) res = await editArticle(newData, slug);
+    else res = await createArticle(newData);
+
     if (!res) return setError(() => true);
     history.push(`/articles/${res}`);
   };
@@ -44,20 +65,40 @@ const NewArticle = ({ createArticle, tagList = [] }) => {
     return <Tag key={id} {...props} deleteTag={() => deleteTag(id)} />;
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const opt = { maxLength: null };
-
   return (
     <form className={classes.wrapper} onSubmit={handleSubmit((data) => submit(data))}>
-      <legend>Create new article</legend>
-      <TextInput register={register} errors={errors} name={'title'} label={'Title'} opt={opt} />
-      <TextInput register={register} errors={errors} name={'description'} label={'Short description'} opt={opt} />
-      <TextAreaInput register={register} errors={errors} name={'body'} label={'Text'} opt={opt} />
+      <legend>{slug ? 'Edit article' : 'Create new article'}</legend>
+      <label>
+        Title
+        <input
+          {...register('title', { ...textfield })}
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <strong>{errors.title?.message}</strong>
+      </label>
+      <label>
+        Description
+        <input
+          {...register('description', { ...textfield })}
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <strong>{errors.description?.message}</strong>
+      </label>
+      <label>
+        Text
+        <textarea
+          {...register('body', { ...textfield })}
+          placeholder="Text"
+          type="textarea"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        ></textarea>
+        <strong>{errors.body?.message}</strong>
+      </label>
       {renderTags}
       <Tag last={true} addTag={(text) => addTag(text)} />
       <button type="submit" className={classes.send}>
@@ -70,9 +111,12 @@ const NewArticle = ({ createArticle, tagList = [] }) => {
 
 let index = 0;
 
-const mapStateToProps = ({ articleReducer }) => {
+const mapStateToProps = ({ articleReducer: { article } }) => {
   return {
-    tagList: articleReducer?.tagList,
+    title: article?.title,
+    body: article?.body,
+    description: article?.description,
+    tagList: article?.tagList,
   };
 };
 

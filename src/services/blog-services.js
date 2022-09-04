@@ -87,12 +87,22 @@ export default class blogServices {
         ...data,
       },
     };
-    const res = await this.getResourse(`/articles/${slug}`, 'POST', article);
+    const res = await this.getResourse(`/articles/${slug}`, 'PUT', article);
     return res;
   }
 
   async deleteArticle(slug) {
-    const res = await this.getResourse(`/articles/${slug}`, 'DELETE');
+    await this.getResourse(`/articles/${slug}`, 'DELETE');
+    return true;
+  }
+
+  async addFavofite(slug) {
+    const res = await this.getResourse(`/articles/${slug}/favorite`, 'POST');
+    return res;
+  }
+
+  async deleteFavofite(slug) {
+    const res = await this.getResourse(`/articles/${slug}/favorite`, 'DELETE');
     return res;
   }
 }

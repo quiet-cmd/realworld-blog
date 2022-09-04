@@ -13,31 +13,7 @@ export const TextInput = ({ register, name, opt = {}, label, errors, defaultValu
   return (
     <label>
       {label}
-      <input {...register(name, { ...username, ...opt })} placeholder={label} defaultValue={defaultValue} />
-      <strong>{errors[name]?.message}</strong>
-    </label>
-  );
-};
-
-export const TextAreaInput = ({ register, name, opt = {}, label, errors, defaultValue }) => {
-  const username = {
-    required: true,
-    minLength: { value: 3, message: 'Min length is 3' },
-    maxLength: { value: 20, message: 'Max length is 20' },
-    pattern: {
-      value: /^\S+$/,
-      message: 'Field must not be empty',
-    },
-  };
-  return (
-    <label>
-      {label}
-      <textarea
-        {...register(name, { ...username, ...opt })}
-        placeholder={label}
-        defaultValue={defaultValue}
-        type="textarea"
-      ></textarea>
+      <input {...register(name, { ...username, ...opt })} placeholder={label} value={defaultValue} />
       <strong>{errors[name]?.message}</strong>
     </label>
   );
