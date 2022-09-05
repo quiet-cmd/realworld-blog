@@ -38,10 +38,10 @@ export const deleteArticle = (slug) => {
 };
 
 export const changeFavorite = (slug, flag) => {
-  return async (dispatch) => {
+  return async () => {
     const res = flag ? await service.deleteFavofite(slug) : await service.addFavofite(slug);
     if (res === null) return false;
-    dispatch(findArticle(res));
-    return true;
+    //dispatch(findArticle(res));
+    return res.article.favoritesCount;
   };
 };

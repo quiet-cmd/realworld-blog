@@ -11,6 +11,7 @@ import classes from './article-item.module.scss';
 const ArticleItem = ({
   deleteArticle,
   changeFavorite,
+  authorized,
   slug = null,
   author,
   title,
@@ -21,6 +22,7 @@ const ArticleItem = ({
   createdAt = null,
 }) => {
   const [like, setLike] = useState(favorited);
+  const [likeCount, setLikeCount] = useState(favoritesCount);
   const history = useHistory();
   const tags = tagList.map((name, i) => <Tag key={i}>{name}</Tag>);
   const image = author?.image;
@@ -33,10 +35,12 @@ const ArticleItem = ({
   };
 
   const changeLike = async () => {
-    await changeFavorite(slug, like);
+    const res = await changeFavorite(slug, like);
     setLike((e) => !e);
-    history.go(0);
+    setLikeCount(() => res);
   };
+
+  const buttonFlag = slug && authorized;
 
   return (
     <div className={classes.article}>
@@ -44,9 +48,15 @@ const ArticleItem = ({
         <div className={classes.top}>
           <h2 className={classes.title}>{title}</h2>
           <label className={classes.like}>
-            <input type="checkbox" className={classes.check} checked={like} onChange={changeLike} />
+            <input
+              type="checkbox"
+              className={classes.check}
+              checked={like}
+              onChange={changeLike}
+              disabled={!authorized}
+            />
             <span className={classes.box}></span>
-            <span className={classes['like-check']}>{favoritesCount}</span>
+            <span className={classes['like-check']}>{likeCount}</span>
           </label>
         </div>
         <div className={classes['tag-wrapper']}>{tags}</div>
@@ -56,12 +66,12 @@ const ArticleItem = ({
         <div className={classes['user-left']}>
           <h2 className={classes.name}>{username}</h2>
           <p className={classes.date}>{format(new Date(createdAt), 'MMMM dd, yyyy')}</p>
-          {slug && (
+          {buttonFlag && (
             <button className={classes.delete} onClick={onDelete}>
               Delete
             </button>
           )}
-          {slug && (
+          {buttonFlag && (
             <button className={classes.edit} onClick={() => history.push(`/articles/${slug}/edit`)}>
               Edit
             </button>
@@ -77,4 +87,10 @@ const ArticleItem = ({
   );
 };
 
-export default connect(null, action)(ArticleItem);
+const mapStateToProps = ({ userReducer: { authorized } }) => {
+  return {
+    authorized: authorized,
+  };
+};
+
+export default connect(mapStateToProps, action)(ArticleItem);
