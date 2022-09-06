@@ -5,7 +5,7 @@ import reduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import reducer from './redux/reducer';
-import App from './components/app';
+import App from './components/page/app';
 
 import './style/nullify.scss';
 

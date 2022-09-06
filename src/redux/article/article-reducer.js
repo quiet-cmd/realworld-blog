@@ -5,7 +5,7 @@ const articleReducer = (state, action) => {
     case 'GET-PAGE':
       return { ...state, article: action.value, error: false };
     case 'NEW-PAGE':
-      return { ...state, article: { body: '', description: '', title: '', tagLis: [] } };
+      return { ...state, article: { body: '', description: '', title: '', tagList: [] } };
     default:
       return state;
   }
