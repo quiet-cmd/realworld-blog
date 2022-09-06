@@ -18,7 +18,7 @@ export default class blogServices {
       if (!res.ok) throw new Error(res.status);
       return await res.json();
     } catch (e) {
-      return null;
+      return e.message;
     }
   }
 
@@ -30,7 +30,7 @@ export default class blogServices {
 
   async getPageArticles(slug) {
     const result = await this.getResourse(`articles/${slug}`);
-    return result?.article;
+    return result;
   }
 
   async registerUser(data) {
@@ -92,8 +92,8 @@ export default class blogServices {
   }
 
   async deleteArticle(slug) {
-    await this.getResourse(`/articles/${slug}`, 'DELETE');
-    return true;
+    const res = await this.getResourse(`/articles/${slug}`, 'DELETE');
+    return res;
   }
 
   async addFavofite(slug) {

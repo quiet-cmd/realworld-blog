@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Tag } from 'antd';
 import { format } from 'date-fns';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import * as action from '../../redux/article/article-action';
 
@@ -20,13 +20,15 @@ const ArticleItem = ({
   favoritesCount,
   tagList = [],
   createdAt = null,
+  full = false,
+  username = '',
 }) => {
   const [like, setLike] = useState(favorited);
   const [likeCount, setLikeCount] = useState(favoritesCount);
   const history = useHistory();
   const tags = tagList.map((name, i) => <Tag key={i}>{name}</Tag>);
   const image = author?.image;
-  const username = author?.username;
+  const owner = author?.username;
 
   const onDelete = async () => {
     const res = await deleteArticle(slug);
@@ -40,13 +42,15 @@ const ArticleItem = ({
     setLikeCount(() => res);
   };
 
-  const buttonFlag = slug && authorized;
+  const buttonFlag = full && authorized && username === owner;
 
   return (
     <div className={classes.article}>
       <div className={classes['article-info']}>
         <div className={classes.top}>
-          <h2 className={classes.title}>{title}</h2>
+          <Link to={`/articles/${slug}`}>
+            <h2 className={classes.title}>{title}</h2>
+          </Link>
           <label className={classes.like}>
             <input
               type="checkbox"
@@ -64,7 +68,7 @@ const ArticleItem = ({
       </div>
       <div className={classes.user}>
         <div className={classes['user-left']}>
-          <h2 className={classes.name}>{username}</h2>
+          <h2 className={classes.name}>{owner}</h2>
           <p className={classes.date}>{format(new Date(createdAt), 'MMMM dd, yyyy')}</p>
           {buttonFlag && (
             <button className={classes.delete} onClick={onDelete}>
@@ -87,9 +91,10 @@ const ArticleItem = ({
   );
 };
 
-const mapStateToProps = ({ userReducer: { authorized } }) => {
+const mapStateToProps = ({ userReducer: { authorized, user } }) => {
   return {
     authorized: authorized,
+    username: user?.username,
   };
 };
 

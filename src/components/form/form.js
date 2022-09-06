@@ -6,14 +6,14 @@ export const TextInput = ({ register, name, opt = {}, label, errors, defaultValu
     minLength: { value: 3, message: 'Min length is 3' },
     maxLength: { value: 20, message: 'Max length is 20' },
     pattern: {
-      value: /^\S+$/,
-      message: 'Field must not be empty',
+      value: /^[a-z0-9_-]{3,21}$/,
+      message: 'Invalid characters',
     },
   };
   return (
     <label>
       {label}
-      <input {...register(name, { ...username, ...opt })} placeholder={label} value={defaultValue} />
+      <input {...register(name, { ...username, ...opt })} placeholder={label} defaultValue={defaultValue} />
       <strong>{errors[name]?.message}</strong>
     </label>
   );

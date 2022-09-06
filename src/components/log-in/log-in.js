@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -8,7 +9,8 @@ import { EmailInput, PasswordInput } from '../form/form';
 
 import classes from './log-in.module.scss';
 
-const LogIn = ({ error, logIn, userError }) => {
+const LogIn = ({ logIn }) => {
+  const [error, setError] = useState(false);
   const {
     register,
     handleSubmit,
@@ -16,14 +18,10 @@ const LogIn = ({ error, logIn, userError }) => {
   } = useForm();
   const history = useHistory();
 
-  useEffect(() => {
-    userError(false);
-    return () => userError(false);
-  }, []);
-
   const submit = async (data) => {
     const res = await logIn(data);
     if (res) history.push('/');
+    setError(true);
   };
 
   return (
@@ -40,10 +38,4 @@ const LogIn = ({ error, logIn, userError }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { error } }) => {
-  return {
-    error: error,
-  };
-};
-
-export default connect(mapStateToProps, action)(LogIn);
+export default connect(null, action)(LogIn);

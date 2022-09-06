@@ -1,7 +1,6 @@
 import { Pagination } from 'antd';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import ArticleItem from '../article-item';
 import * as action from '../../redux/articles/articles-action';
@@ -14,12 +13,10 @@ const Articles = ({ getPage, totalPage, articles }) => {
   useEffect(() => {
     getPage();
   }, []);
-  const articleList = articles.map(({ slug, ...props }, i) => (
-    <Link key={i} to={`/articles/${slug}`}>
-      <div className={classes.article}>
-        <ArticleItem {...props} />
-      </div>
-    </Link>
+  const articleList = articles.map(({ slug, ...props }) => (
+    <div key={slug} className={classes.article}>
+      <ArticleItem {...props} slug={slug} />
+    </div>
   ));
   return (
     <>

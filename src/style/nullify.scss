@@ -67,6 +67,7 @@ button {
   border: 1px solid black;
   border-radius: 4px;
   height: 40px;
+  cursor: pointer;
 }
 
 input[type='checkbox'] {
@@ -74,4 +75,5 @@ input[type='checkbox'] {
   width: 16px;
   height: 16px;
   margin-right: 6px;
+  cursor: pointer;
 }

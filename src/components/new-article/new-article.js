@@ -9,11 +9,11 @@ import * as action from '../../redux/article/article-action';
 import classes from './new-article.module.scss';
 
 const NewArticle = ({ match, getArticle, editArticle, newArticle, createArticle, ...props }) => {
-  const [tags, setTags] = useState(props.tagList || []);
+  const [tags, setTags] = useState(props.tagList);
   const [error, setError] = useState(false);
-  const [body, setBody] = useState(props.body || '');
-  const [title, setTitle] = useState(props.title || '');
-  const [description, setDescription] = useState(props.description || '');
+  const [body, setBody] = useState(props.body);
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
   const slug = match?.params?.slug;
   const history = useHistory();
   const {
@@ -22,16 +22,15 @@ const NewArticle = ({ match, getArticle, editArticle, newArticle, createArticle,
     formState: { errors },
   } = useForm();
   const textfield = {
-    required: true,
-    pattern: {
-      value: /^\S+$/,
+    required: {
+      value: true,
       message: 'Field must not be empty',
     },
   };
 
   useEffect(() => {
-    newArticle();
-    if (slug) getArticle(slug);
+    slug ? getArticle(slug) : newArticle();
+    console.log(props);
     setTags((e) =>
       e.reduce((acc, e) => {
         index += 1;
@@ -62,7 +61,9 @@ const NewArticle = ({ match, getArticle, editArticle, newArticle, createArticle,
   };
 
   const renderTags = tags.map(({ id, ...props }) => {
-    return <Tag key={id} {...props} deleteTag={() => deleteTag(id)} />;
+    index += 1;
+    const key = id ? id : index;
+    return <Tag key={key} {...props} deleteTag={() => deleteTag(key)} />;
   });
 
   return (
@@ -112,11 +113,12 @@ const NewArticle = ({ match, getArticle, editArticle, newArticle, createArticle,
 let index = 0;
 
 const mapStateToProps = ({ articleReducer: { article } }) => {
+  console.log(article);
   return {
-    title: article?.title,
-    body: article?.body,
-    description: article?.description,
-    tagList: article?.tagList,
+    title: article?.title || '',
+    description: article?.description || '',
+    body: article?.body || '',
+    tagList: article?.tagList || [],
   };
 };
 

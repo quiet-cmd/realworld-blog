@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -8,7 +8,9 @@ import { CheckboxInput, TextInput, EmailInput, PasswordInput } from '../form/for
 
 import classes from './log-up.module.scss';
 
-const LogUp = ({ error, logUp, userError }) => {
+const LogUp = ({ logUp }) => {
+  const [error, setEror] = useState(false);
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -17,15 +19,10 @@ const LogUp = ({ error, logUp, userError }) => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    userError(false);
-    return () => userError(false);
-  }, []);
-  const history = useHistory();
-
   const submit = async (data) => {
     const res = await logUp(data);
     if (res) history.push('/');
+    setEror(true);
   };
 
   return (
@@ -53,10 +50,4 @@ const LogUp = ({ error, logUp, userError }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { error } }) => {
-  return {
-    error: error,
-  };
-};
-
-export default connect(mapStateToProps, action)(LogUp);
+export default connect(null, action)(LogUp);

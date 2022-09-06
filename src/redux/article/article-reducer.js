@@ -1,5 +1,5 @@
 const articleReducer = (state, action) => {
-  if (!state) state = { article: {}, error: false };
+  if (!state) state = { article: {} };
 
   switch (action.type) {
     case 'GET-PAGE':

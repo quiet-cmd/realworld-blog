@@ -1,5 +1,5 @@
 const userReducer = (state, action) => {
-  if (!state) state = { user: {}, error: false, authorized: false };
+  if (!state) state = { user: {}, error: false, authorized: true };
 
   switch (action.type) {
     case 'SET-USER':

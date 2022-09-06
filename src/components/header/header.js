@@ -22,7 +22,7 @@ const Header = ({ authorized, logOut, image, username }) => {
           Create article
         </button>
         <button className={classes['profile']} onClick={() => routeChange('/profile')}>
-          {username}{' '}
+          {username}
           <img
             src={image ? image : 'https://static.productionready.io/images/smiley-cyrus.jpg'}
             alt="avatar"
@@ -53,8 +53,8 @@ const Header = ({ authorized, logOut, image, username }) => {
 const mapStateToProps = ({ userReducer: { authorized, user } }) => {
   return {
     authorized: authorized,
-    image: user?.user?.image,
-    username: user?.user?.username,
+    image: user?.image,
+    username: user?.username,
   };
 };
 

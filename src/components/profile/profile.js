@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -8,17 +8,13 @@ import * as action from '../../redux/user/user-action';
 
 import classes from './profile.module.scss';
 
-const Profile = ({ email, username, updateUser, error, userError }) => {
+const Profile = ({ email, username, updateUser }) => {
+  const [error, setError] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    userError(false);
-    return () => userError(false);
-  }, []);
 
   const history = useHistory();
   const submit = async (data) => {
@@ -27,6 +23,7 @@ const Profile = ({ email, username, updateUser, error, userError }) => {
     }
     const res = await updateUser(data);
     if (res) history.push('/');
+    setError(true);
   };
 
   const opt = { required: false };
@@ -44,12 +41,11 @@ const Profile = ({ email, username, updateUser, error, userError }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { authorized, error, user } }) => {
+const mapStateToProps = ({ userReducer: { authorized, user } }) => {
   return {
     authorized: authorized,
-    email: user?.user?.email,
-    username: user?.user?.username,
-    error: error,
+    email: user?.email,
+    username: user?.username,
   };
 };
 
