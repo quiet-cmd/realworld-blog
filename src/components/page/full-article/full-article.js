@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { Redirect } from 'react-router-dom';
 
-import ArticleItem from '../../block/article-item';
+import ArticleItem from '../../layout/article-item';
 import * as action from '../../../redux/article/article-action';
 
 import classes from './full-article.module.scss';

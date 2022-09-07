@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag } from 'antd';
+import { Tag, Modal } from 'antd';
 import { format } from 'date-fns';
 import { connect } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
@@ -29,6 +29,22 @@ const ArticleItem = ({
   const tags = tagList.map((name, i) => <Tag key={i}>{name}</Tag>);
   const image = author?.image;
   const owner = author?.username;
+
+  const showDeleteConfirm = () => {
+    Modal.confirm({
+      title: 'Are you sure to delete this article?',
+      content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+
+      onOk() {
+        onDelete();
+      },
+
+      onCancel() {},
+    });
+  };
 
   const onDelete = async () => {
     const res = await deleteArticle(slug);
@@ -71,7 +87,7 @@ const ArticleItem = ({
           <h2 className={classes.name}>{owner}</h2>
           <p className={classes.date}>{format(new Date(createdAt), 'MMMM dd, yyyy')}</p>
           {buttonFlag && (
-            <button className={classes.delete} onClick={onDelete}>
+            <button className={classes.delete} onClick={showDeleteConfirm}>
               Delete
             </button>
           )}

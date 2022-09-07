@@ -1,4 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
+
+import classes from './form.module.scss';
+
+export const errorClass = (data) => {
+  return classNames({
+    [classes.normal]: !data,
+    [classes.error]: data,
+  });
+};
 
 export const TextInput = ({ register, name, opt = {}, label, errors, defaultValue }) => {
   const username = {
@@ -13,7 +23,12 @@ export const TextInput = ({ register, name, opt = {}, label, errors, defaultValu
   return (
     <label>
       {label}
-      <input {...register(name, { ...username, ...opt })} placeholder={label} defaultValue={defaultValue} />
+      <input
+        {...register(name, { ...username, ...opt })}
+        placeholder={label}
+        defaultValue={defaultValue}
+        className={errorClass(errors[name])}
+      />
       <strong>{errors[name]?.message}</strong>
     </label>
   );
@@ -30,7 +45,13 @@ export const EmailInput = ({ register, name, opt = {}, label, errors, defaultVal
   return (
     <label>
       {label}
-      <input {...register(name, { ...email, ...opt })} placeholder={label} defaultValue={defaultValue} type="email" />
+      <input
+        {...register(name, { ...email, ...opt })}
+        placeholder={label}
+        defaultValue={defaultValue}
+        type="email"
+        className={errorClass(errors[name])}
+      />
       <strong>{errors[name]?.message}</strong>
     </label>
   );
@@ -54,6 +75,7 @@ export const PasswordInput = ({ register, name, opt = {}, label, errors, default
         placeholder={label}
         defaultValue={defaultValue}
         type="password"
+        className={errorClass(errors[name])}
       />
       <strong>{errors[name]?.message}</strong>
     </label>
@@ -71,7 +93,12 @@ export const UrlInput = ({ register, name, opt = {}, label, errors, defaultValue
   return (
     <label>
       {label}
-      <input {...register(name, { ...url, ...opt })} placeholder={label} defaultValue={defaultValue} />
+      <input
+        {...register(name, { ...url, ...opt })}
+        placeholder={label}
+        defaultValue={defaultValue}
+        className={errorClass(errors[name])}
+      />
       <strong>{errors[name]?.message}</strong>
     </label>
   );
@@ -88,6 +115,7 @@ export const CheckboxInput = ({ register, name, opt = {}, label, errors, default
         placeholder={label}
         defaultValue={defaultValue}
         type="checkbox"
+        className={errorClass(errors[name])}
       />
       {label}
       <strong>{errors[name]?.message}</strong>

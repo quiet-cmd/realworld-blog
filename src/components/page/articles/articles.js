@@ -2,7 +2,7 @@ import { Pagination } from 'antd';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import ArticleItem from '../../block/article-item';
+import ArticleItem from '../../layout/article-item';
 import * as action from '../../../redux/articles/articles-action';
 
 import classes from './articles.module.scss';

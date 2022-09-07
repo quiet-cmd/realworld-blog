@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { errorClass } from '../../block/form/form';
 import * as action from '../../../redux/article/article-action';
 
 import Tag from './block/tag';
@@ -73,6 +74,7 @@ const FormArticle = ({ slug = null, editArticle, newArticle, createArticle, ...p
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className={errorClass(errors.title)}
         />
         <strong>{errors.title?.message}</strong>
       </label>
@@ -83,6 +85,7 @@ const FormArticle = ({ slug = null, editArticle, newArticle, createArticle, ...p
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className={errorClass(errors.description)}
         />
         <strong>{errors.description?.message}</strong>
       </label>
@@ -94,6 +97,7 @@ const FormArticle = ({ slug = null, editArticle, newArticle, createArticle, ...p
           type="textarea"
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          className={errorClass(errors.body)}
         ></textarea>
         <strong>{errors.body?.message}</strong>
       </label>
