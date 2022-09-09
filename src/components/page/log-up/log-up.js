@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import * as action from '../../../redux/user/user-action';
-import { CheckboxInput, TextInput, EmailInput, PasswordInput } from '../../block/form/form';
+import CheckboxInput from '../../block/checkbox-input';
+import TextInput from '../../block/text-input';
+import EmailInput from '../../block/email-input';
+import PasswordInput from '../../block/password-input';
 
 import classes from './log-up.module.scss';
 
 const LogUp = ({ logUp }) => {
-  const [error, setEror] = useState(false);
+  const [isError, setIsError] = useState(false);
   const history = useHistory();
   const {
     register,
@@ -22,7 +25,7 @@ const LogUp = ({ logUp }) => {
   const submit = async (data) => {
     const res = await logUp(data);
     if (res) history.push('/');
-    setEror(true);
+    setIsError(true);
   };
 
   return (
@@ -42,7 +45,7 @@ const LogUp = ({ logUp }) => {
         label={'I agree to the processing of my personal information'}
       />
       <button type="submit">Create</button>
-      {error && <strong>user already exists</strong>}
+      {isError && <strong>user already exists</strong>}
       <div>
         Already have an account? <Link to="/sign-in">Sign In.</Link>
       </div>

@@ -11,7 +11,7 @@ import classes from './article-item.module.scss';
 const ArticleItem = ({
   deleteArticle,
   changeFavorite,
-  authorized,
+  isAuthorized,
   slug = null,
   author,
   title,
@@ -58,7 +58,7 @@ const ArticleItem = ({
     setLikeCount(() => res);
   };
 
-  const buttonFlag = full && authorized && username === owner;
+  const buttonFlag = full && isAuthorized && username === owner;
 
   return (
     <div className={classes.article}>
@@ -73,13 +73,13 @@ const ArticleItem = ({
               className={classes.check}
               checked={like}
               onChange={changeLike}
-              disabled={!authorized}
+              disabled={!isAuthorized}
             />
             <span className={classes.box}></span>
             <span className={classes['like-check']}>{likeCount}</span>
           </label>
         </div>
-        <div className={classes['tag-wrapper']}>{tags}</div>
+        <div className={classes['tag-list']}>{tags}</div>
         <div className={classes.text}>{description}</div>
       </div>
       <div className={classes.user}>
@@ -107,9 +107,9 @@ const ArticleItem = ({
   );
 };
 
-const mapStateToProps = ({ userReducer: { authorized, user } }) => {
+const mapStateToProps = ({ userReducer: { isAuthorized, user } }) => {
   return {
-    authorized: authorized,
+    isAuthorized: isAuthorized,
     username: user?.username,
   };
 };

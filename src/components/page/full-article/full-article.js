@@ -9,16 +9,16 @@ import * as action from '../../../redux/article/article-action';
 import classes from './full-article.module.scss';
 
 const FullArticle = ({ match, getArticle, article = {} }) => {
-  const [error, setError] = useState();
+  const [isError, setIsError] = useState();
 
   const getData = async () => {
     const res = await getArticle(match.params.slug);
-    setError(() => !res);
+    setIsError(() => !res);
   };
   useLayoutEffect(() => {
     getData();
   }, []);
-  if (error) return <Redirect to="/404/" />;
+  if (isError) return <Redirect to="/404/" />;
   const body = article?.body;
   const props = Object.keys(article).length ? article : null;
   return (

@@ -3,13 +3,16 @@ import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { EmailInput, PasswordInput, UrlInput, TextInput } from '../../block/form/form';
 import * as action from '../../../redux/user/user-action';
+import UrlInput from '../../block/url-input';
+import TextInput from '../../block/text-input';
+import EmailInput from '../../block/email-input';
+import PasswordInput from '../../block/password-input';
 
 import classes from './profile.module.scss';
 
 const Profile = ({ email, username, updateUser }) => {
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,7 +26,7 @@ const Profile = ({ email, username, updateUser }) => {
     }
     const res = await updateUser(data);
     if (res) history.push('/');
-    setError(true);
+    setIsError(true);
   };
 
   const opt = { required: false };
@@ -36,7 +39,7 @@ const Profile = ({ email, username, updateUser }) => {
       <PasswordInput register={register} errors={errors} name={'password'} label={'New password'} opt={opt} />
       <UrlInput register={register} errors={errors} name={'image'} label={'Avatar image (url)'} opt={opt} />
       <button type="submit">Save</button>
-      {error && <strong>user already exists</strong>}
+      {isError && <strong>user already exists</strong>}
     </form>
   );
 };

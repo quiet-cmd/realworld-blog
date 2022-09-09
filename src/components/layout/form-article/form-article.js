@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { errorClass } from '../../block/form/form';
+import { errorClass } from '../../block/class-names/class-names';
 import * as action from '../../../redux/article/article-action';
 
 import Tag from './block/tag';

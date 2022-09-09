@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import * as action from '../../../redux/user/user-action';
-import { EmailInput, PasswordInput } from '../../block/form/form';
+import EmailInput from '../../block/email-input';
+import PasswordInput from '../../block/password-input';
 
 import classes from './log-in.module.scss';
 
 const LogIn = ({ logIn }) => {
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,7 +21,7 @@ const LogIn = ({ logIn }) => {
   const submit = async (data) => {
     const res = await logIn(data);
     if (res) history.push('/');
-    setError(true);
+    setIsError(true);
   };
 
   return (
@@ -29,7 +30,7 @@ const LogIn = ({ logIn }) => {
       <EmailInput register={register} errors={errors} name={'email'} label={'Email address'} />
       <PasswordInput register={register} errors={errors} name={'password'} label={'Password'} />
       <button type="submit">Login</button>
-      {error && <strong>User does not exist</strong>}
+      {isError && <strong>User does not exist</strong>}
       <div>
         Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
       </div>

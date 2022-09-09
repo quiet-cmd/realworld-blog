@@ -6,13 +6,13 @@ import { logOut } from '../../../../../redux/user/user-action';
 
 import classes from './header.module.scss';
 
-const Header = ({ authorized, logOut, image, username }) => {
+const Header = ({ isAuthorized, logOut, image, username }) => {
   const history = useHistory();
 
   const routeChange = (url) => {
     history.push(url);
   };
-  if (authorized) {
+  if (isAuthorized) {
     return (
       <div className={classes.header}>
         <button className={classes.logo} onClick={() => routeChange('/')}>
@@ -50,9 +50,9 @@ const Header = ({ authorized, logOut, image, username }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { authorized, user } }) => {
+const mapStateToProps = ({ userReducer: { isAuthorized, user } }) => {
   return {
-    authorized: authorized,
+    isAuthorized: isAuthorized,
     image: user?.image,
     username: user?.username,
   };

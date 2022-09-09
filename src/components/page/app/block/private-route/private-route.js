@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-const PrivateRoute = ({ children, authorized, ...rest }) => (
-  <Route {...rest} render={(props) => (authorized ? { ...children, props: props } : <Redirect to="/sign-in" />)} />
+const PrivateRoute = ({ children, isAuthorized, ...rest }) => (
+  <Route {...rest} render={(props) => (isAuthorized ? { ...children, props: props } : <Redirect to="/sign-in" />)} />
 );
 
-const mapStateToProps = ({ userReducer: { authorized } }) => {
+const mapStateToProps = ({ userReducer: { isAuthorized } }) => {
   return {
-    authorized: authorized,
+    isAuthorized: isAuthorized,
   };
 };
 
