@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-loading';
 import { connect } from 'react-redux';
 import { Result } from 'antd';
 
@@ -20,16 +21,17 @@ const App = ({ checkAuthorization }) => {
   useEffect(() => {
     checkAuthorization();
   }, []);
+
   return (
     <Router forceRefresh={true}>
       <Header />
       <Switch>
-        <Route path={['/', '/articles']} component={Articles} exact />
-        <Route path="/articles/:slug" component={FullArticle} exact />
-        <PrivateRoute path="/articles/:slug/edit" exact>
+        <Route path={['/', '/articles']} component={Articles} exact loading />
+        <Route path="/articles/:slug" component={FullArticle} exact loading />
+        <PrivateRoute path="/articles/:slug/edit" exact loading>
           <EditArticle />
         </PrivateRoute>
-        <PrivateRoute path="/new-article" exact>
+        <PrivateRoute path="/new-article" exact loading>
           <NewArticle />
         </PrivateRoute>
         <PrivateRoute path="/profile" exact>

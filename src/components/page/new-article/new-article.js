@@ -1,5 +1,6 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useContext } from 'react';
 import { connect } from 'react-redux';
+import { LoadingContext } from 'react-router-loading';
 
 import FormArticle from '../../layout/form-article';
 import * as action from '../../../redux/article/article-action';
@@ -7,8 +8,11 @@ import * as action from '../../../redux/article/article-action';
 import './new-article.scss';
 
 const NewArticle = ({ newArticle, article }) => {
+  const loadingContext = useContext(LoadingContext);
+
   const getData = async () => {
     await newArticle();
+    loadingContext.done();
   };
   useLayoutEffect(() => {
     getData();

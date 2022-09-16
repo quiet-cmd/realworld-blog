@@ -20,6 +20,7 @@ const Profile = ({ email, username, updateUser }) => {
   } = useForm();
 
   const history = useHistory();
+
   const submit = async (data) => {
     for (let key in data) {
       if (data[key] === '') delete data[key];

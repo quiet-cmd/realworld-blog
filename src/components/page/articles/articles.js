@@ -1,6 +1,7 @@
 import { Pagination } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
+import { LoadingContext } from 'react-router-loading';
 
 import ArticleItem from '../../layout/article-item';
 import * as action from '../../../redux/articles/articles-action';
@@ -10,9 +11,17 @@ import classes from './articles.module.scss';
 import 'antd/dist/antd.min.css';
 
 const Articles = ({ getPage, totalPage, articles }) => {
+  const loadingContext = useContext(LoadingContext);
+
+  const getData = async () => {
+    await getPage();
+    loadingContext.done();
+  };
+
   useEffect(() => {
-    getPage();
+    getData();
   }, []);
+
   const articleList = articles.map(({ slug, ...props }) => (
     <div key={slug} className={classes.article}>
       <ArticleItem {...props} slug={slug} />
