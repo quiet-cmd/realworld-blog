@@ -21,7 +21,7 @@ const EditArticle = ({ match, getArticle, article }) => {
   useLayoutEffect(() => {
     getData();
   }, []);
-  
+
   const props = Object.keys(article).length ? article : null;
   if (isError) return <Redirect to="/404/" />;
   return <>{props && <FormArticle {...props} />}</>;
