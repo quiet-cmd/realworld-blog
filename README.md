@@ -1,1 +1,1 @@
-https://realworld-blog-git-master-quiet-cmd.vercel.app/
+https://realworld-blog-quiet-cmd.vercel.app/
